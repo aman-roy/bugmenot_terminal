@@ -14,6 +14,11 @@ def valid(url):
 		return None
 	
 link = raw_input("Enter website: ")
+link = valid(link)
+
+if link == None:
+	print "Invalid url"
+	quit()
 
 link = "http://bugmenot.com/view/" + link
 
