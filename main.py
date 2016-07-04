@@ -3,7 +3,18 @@ import urllib
 import cfscrape
 import os
 
+def valid(url):
+	if "://" in url:
+		url = url.split("://")
+		url = url[1]
+	new = url.split(".")
+	if new[-1] < 5 and len(new) > 1:
+		return url
+	else:
+		return None
+	
 link = raw_input("Enter website: ")
+
 link = "http://bugmenot.com/view/" + link
 
 scraper = cfscrape.create_scraper()
