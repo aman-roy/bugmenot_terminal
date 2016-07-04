@@ -8,7 +8,7 @@ def valid(url):
 		url = url.split("://")
 		url = url[1]
 	new = url.split(".")
-	if new[-1] < 5 and len(new) > 1:
+	if new[-1] > 6 and len(new) > 1:
 		return url
 	else:
 		return None
