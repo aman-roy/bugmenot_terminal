@@ -9,7 +9,6 @@
 
 # Python version used : - Python 2.x
 
-
 from bs4 import BeautifulSoup
 import urllib
 import cfscrape
@@ -26,6 +25,14 @@ def valid(url):
 	else:
 		return None
 
+# Retry again and again for a valid input
+def getinput():
+	while True:
+		mylink = raw_input("Enter website: ")
+		mylink = valid(mylink)
+		if mylink != None:
+			return ("http://bugmenot.com/view/" + mylink)
+
 # pritify the result
 def pritify(data):
 	data = data.split("Stats:")
@@ -34,37 +41,31 @@ def pritify(data):
 	final = data[0].split("Password:")
 	return (final[0] + "\n" + "Password:" + final[1])
 
+# Get the page content
+def content(weblink):
+	scraper = cfscrape.create_scraper()
+	soup = scraper.get(weblink).content
+	fopen = open("VTvedLmrpSMuq329.html", 'w')
+	fopen.write(soup)
+	fopen.close()
 
-# get the url and check for it correctness and 
-# if the url is not valid it will quit.
-link = raw_input("Enter website: ")
-link = valid(link)
-if link == None:
-	print "Invalid url"
-	quit()
-
-link = "http://bugmenot.com/view/" + link
-
-# Bypass cloudflare and save the html to a file
-scraper = cfscrape.create_scraper()
-soup = scraper.get(link).content
-fopen = open("VTvedLmrpSMuq329.html", 'w')
-fopen.write(soup)
-fopen.close()
+	html_doc = open("VTvedLmrpSMuq329.html")
+	soup = BeautifulSoup(html_doc, 'html.parser')
+	html_doc.close()
+	os.remove("VTvedLmrpSMuq329.html")
+	return soup
 
 
-# get all the contents of the file to a variable 
-# and delete the file
-html_doc = open("VTvedLmrpSMuq329.html")
-soup = BeautifulSoup(html_doc, 'html.parser')
-html_doc.close()
-os.remove("VTvedLmrpSMuq329.html")
+
+link = getinput()
+
+html = content(link)
 
 
 # Get the important part of the file
 # and if not get the data print an error.
 try:
-    nest = soup.article.get_text().strip()
+    nest = html.article.get_text().strip()
 except AttributeError:
 	print("No data Found..!!")
 	quit()
