@@ -55,12 +55,8 @@ def content(weblink):
 	os.remove("VTvedLmrpSMuq329.html")
 	return soup
 
-
-
 link = getinput()
-
 html = content(link)
-
 
 # Get the important part of the file
 # and if not get the data print an error.
@@ -70,7 +66,5 @@ except AttributeError:
 	print("No data Found..!!")
 	quit()
 
-
 # Pritify the result
-result = pritify(nest)
-print result
+print (pritify(nest))
