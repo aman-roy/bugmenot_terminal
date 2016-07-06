@@ -26,6 +26,15 @@ def valid(url):
 	else:
 		return None
 
+# pritify the result
+def pritify(data):
+	data = data.split("Stats:")
+	data = data[0]
+	data = data.split("Other:")
+	final = data[0].split("Password:")
+	return (final[0] + "\n" + "Password:" + final[1])
+
+
 # get the url and check for it correctness and 
 # if the url is not valid it will quit.
 link = raw_input("Enter website: ")
@@ -62,9 +71,5 @@ except AttributeError:
 
 
 # Pritify the result
-data = nest.split("Stats:")
-data = data[0]
-data = data.split("Other:")
-final = data[0].split("Password:")
-print final[0]
-print ("Password:" + final[1])
+result = pritify(nest)
+print result
