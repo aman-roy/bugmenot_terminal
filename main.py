@@ -33,6 +33,13 @@ def getinput():
 		if mylink != None:
 			return ("http://bugmenot.com/view/" + mylink)
 
+# clear the terminal screen
+def screen_clear():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+
 # pritify the result
 def pritify(data):
 	data = data.split("Stats:")
@@ -43,8 +50,13 @@ def pritify(data):
 
 # Get the page content
 def content(weblink):
-	scraper = cfscrape.create_scraper()
-	soup = scraper.get(weblink).content
+	try:
+		scraper = cfscrape.create_scraper()
+		soup = scraper.get(weblink).content
+	except:
+		print ("Internet error..!!")
+		raw_input()
+		main()
 	fopen = open("VTvedLmrpSMuq329.html", 'w')
 	fopen.write(soup)
 	fopen.close()
@@ -57,6 +69,7 @@ def content(weblink):
 
 # main goes here
 def main():
+	screen_clear()
 	link = getinput()
 	html = content(link)
 
@@ -69,3 +82,8 @@ def main():
 		quit()
 
 	print (pritify(nest))
+
+
+if __name__ == '__main__':
+    main()  # run the main program
+    exit(0)  # exit the program
